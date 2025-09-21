@@ -1,0 +1,206 @@
+{
+  "kk": {
+    "nav": {
+      "home": "Басты бет",
+      "biography": "Өмірбаяны",
+      "gallery": "Галерея",
+      "legacy": "Мұра",
+      "contact": "Байланыс"
+    },
+    "home": {
+      "title": "Кемер Онғалбаев",
+      "subtitle": "Ұлы Отан соғысының батыры",
+      "description": "Толық даңқ орденінің иегері, патриоттық пен ерліктің символы",
+      "learnMore": "Толығырақ білу",
+      "heroQuote": "Отан үшін күресу - ең үлкен құрмет",
+      "portrait": "Батырдың портреті",
+      "timeline": "Өмір хронологиясы",
+      "canvasTitle": "Визуалды тарих",
+      "canvasDescription": "Кемер Онғалбаевтың өмір жолының интерактивті картасы",
+      "viewCanvas": "Картаны қарау",
+      "birthYear": "Туған жылы",
+      "enlistYear": "Қызметке алу",
+      "orders": "Ордендер",
+      "hero": "Батыр"
+    },
+    "biography": {
+      "title": "Өмірбаяны",
+      "earlyLife": "Ерте жылдар",
+      "militaryPath": "Жауынгерлік жолы",
+      "postWar": "Соғыстан кейінгі өмір",
+      "achievements": "Жетістіктер",
+      "readFull": "Толық оқу",
+      "summary1": "Кемер Онғалбаев 1925 жылы Маңғыстау облысында дүниеге келген. 1943 жылы Қызыл Әскер қатарына алынып, майданға жіберілген.",
+      "summary2": "Шайқастарда көрсеткен ерлігі мен батырлығы үшін үш дәрежелі Даңқ орденімен марапатталған, осы құрметті марапаттың толық иегері болған.",
+      "summary3": "Соғыстан кейін отанына оралып, Қазақстанның дамуына және жастарды патриоттық рухта тәрбиелеуге еңбек еткен."
+    },
+    "gallery": {
+      "title": "Галерея",
+      "photos": "Фотосуреттер",
+      "awards": "Марапаттар",
+      "family": "Отбасы"
+    },
+    "legacy": {
+      "title": "Мұра",
+      "influence": "Жастарға әсері",
+      "patriotism": "Патриоттық",
+      "memory": "Есте сақтау"
+    },
+    "contact": {
+      "title": "Байланыс",
+      "name": "Аты",
+      "email": "Email",
+      "message": "Хабарлама",
+      "send": "Жіберу"
+    },
+    "footer": {
+      "title": "Кемер Онғалбаев",
+      "description": "Ұлы Отан соғысының батыры, толық даңқ орденінің иегері. Оның ерлігі мен патриоттығы біздің ұрпаққа үлгі болады.",
+      "hero": "Батыр",
+      "patriot": "Патриот",
+      "navigation": "Навигация",
+      "sources": "Дереккөздер",
+      "contact": "Байланыс",
+      "email": "info@kemer-ongalbayev.kz",
+      "location": "Қазақстан, Алматы",
+      "scrollToTop": "Жоғарыға",
+      "copyright": "Кемер Онғалбаев мемориалды сайты. Барлық құқықтар қорғалған."
+    }
+  },
+  "ru": {
+    "nav": {
+      "home": "Главная",
+      "biography": "Биография",
+      "gallery": "Галерея",
+      "legacy": "Наследие",
+      "contact": "Контакты"
+    },
+    "home": {
+      "title": "Кемер Онгалбаев",
+      "subtitle": "Герой Великой Отечественной войны",
+      "description": "Полный кавалер ордена Славы, символ патриотизма и героизма",
+      "learnMore": "Узнать больше",
+      "heroQuote": "Служение Родине - высшая честь",
+      "portrait": "Портрет героя",
+      "timeline": "Хронология жизни",
+      "canvasTitle": "Визуальная история",
+      "canvasDescription": "Интерактивная карта жизненного пути Кемера Онгалбаева",
+      "viewCanvas": "Посмотреть карту",
+      "birthYear": "Год рождения",
+      "enlistYear": "Призыв",
+      "orders": "Ордена",
+      "hero": "Герой"
+    },
+    "biography": {
+      "title": "Биография",
+      "earlyLife": "Ранние годы",
+      "militaryPath": "Военный путь",
+      "postWar": "Послевоенная жизнь",
+      "achievements": "Достижения",
+      "readFull": "Читать полностью",
+      "summary1": "Кемер Онгалбаев родился в 1925 году в Мангистауской области. В 1943 году был призван в ряды Красной Армии и отправлен на фронт.",
+      "summary2": "За мужество и героизм, проявленные в боях, был награжден тремя степенями ордена Славы, став полным кавалером этой почетной награды.",
+      "summary3": "После войны вернулся на родину, где продолжил трудиться во благо развития Казахстана и воспитания молодежи в духе патриотизма."
+    },
+    "gallery": {
+      "title": "Галерея",
+      "photos": "Фотографии",
+      "awards": "Награды",
+      "family": "Семья"
+    },
+    "legacy": {
+      "title": "Наследие",
+      "influence": "Влияние на молодёжь",
+      "patriotism": "Патриотизм",
+      "memory": "Память"
+    },
+    "contact": {
+      "title": "Контакты",
+      "name": "Имя",
+      "email": "Email",
+      "message": "Сообщение",
+      "send": "Отправить"
+    },
+    "footer": {
+      "title": "Кемер Онгалбаев",
+      "description": "Герой Великой Отечественной войны, полный кавалер ордена Славы. Его мужество и патриотизм служат примером для нашего поколения.",
+      "hero": "Герой",
+      "patriot": "Патриот",
+      "navigation": "Навигация",
+      "sources": "Источники",
+      "contact": "Контакты",
+      "email": "info@kemer-ongalbayev.kz",
+      "location": "Казахстан, Алматы",
+      "scrollToTop": "Наверх",
+      "copyright": "Мемориальный сайт Кемера Онгалбаева. Все права защищены."
+    }
+  },
+  "en": {
+    "nav": {
+      "home": "Home",
+      "biography": "Biography",
+      "gallery": "Gallery",
+      "legacy": "Legacy",
+      "contact": "Contact"
+    },
+    "home": {
+      "title": "Kemer Ongalbayev",
+      "subtitle": "Hero of the Great Patriotic War",
+      "description": "Full holder of the Order of Glory, symbol of patriotism and heroism",
+      "learnMore": "Learn More",
+      "heroQuote": "Serving the Motherland is the highest honor",
+      "portrait": "Hero's portrait",
+      "timeline": "Life timeline",
+      "canvasTitle": "Visual history",
+      "canvasDescription": "Interactive map of Kemer Ongalbayev's life path",
+      "viewCanvas": "View map",
+      "birthYear": "Birth year",
+      "enlistYear": "Enlistment",
+      "orders": "Orders",
+      "hero": "Hero"
+    },
+    "biography": {
+      "title": "Biography",
+      "earlyLife": "Early Life",
+      "militaryPath": "Military Path",
+      "postWar": "Post-War Life",
+      "achievements": "Achievements",
+      "readFull": "Read full",
+      "summary1": "Kemer Ongalbayev was born in 1925 in the Mangystau region. In 1943, he was drafted into the Red Army and sent to the front.",
+      "summary2": "For courage and heroism shown in battles, he was awarded three degrees of the Order of Glory, becoming a full holder of this honorary award.",
+      "summary3": "After the war, he returned to his homeland, where he continued to work for the development of Kazakhstan and the patriotic education of youth."
+    },
+    "gallery": {
+      "title": "Gallery",
+      "photos": "Photos",
+      "awards": "Awards",
+      "family": "Family"
+    },
+    "legacy": {
+      "title": "Legacy",
+      "influence": "Influence on Youth",
+      "patriotism": "Patriotism",
+      "memory": "Memory"
+    },
+    "contact": {
+      "title": "Contact",
+      "name": "Name",
+      "email": "Email",
+      "message": "Message",
+      "send": "Send"
+    },
+    "footer": {
+      "title": "Kemer Ongalbayev",
+      "description": "Hero of the Great Patriotic War, full holder of the Order of Glory. His courage and patriotism serve as an example for our generation.",
+      "hero": "Hero",
+      "patriot": "Patriot",
+      "navigation": "Navigation",
+      "sources": "Sources",
+      "contact": "Contact",
+      "email": "info@kemer-ongalbayev.kz",
+      "location": "Kazakhstan, Almaty",
+      "scrollToTop": "To Top",
+      "copyright": "Kemer Ongalbayev Memorial Website. All rights reserved."
+    }
+  }
+}
