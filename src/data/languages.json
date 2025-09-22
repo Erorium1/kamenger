@@ -32,13 +32,25 @@
       "readFull": "Толық оқу",
       "summary1": "Кемер Онғалбаев 1925 жылы Маңғыстау облысында дүниеге келген. 1943 жылы Қызыл Әскер қатарына алынып, майданға жіберілген.",
       "summary2": "Шайқастарда көрсеткен ерлігі мен батырлығы үшін үш дәрежелі Даңқ орденімен марапатталған, осы құрметті марапаттың толық иегері болған.",
-      "summary3": "Соғыстан кейін отанына оралып, Қазақстанның дамуына және жастарды патриоттық рухта тәрбиелеуге еңбек еткен."
+      "summary3": "Соғыстан кейін отанына оралып, Қазақстанның дамуына және жастарды патриоттық рухта тәрбиелеуге еңбек еткен.",
+      "profile": {
+        "p1": "Оңғалабаев Кемер Сахиұлы 1925 жылы 5 желтоқсанда Түпқараған ауданына қарасты Форт-Шевченко қаласында дүниеге келген.",
+        "p2": "Соғыс және еңбек ардагері.",
+        "p3": "Екінші дүниежүзілік соғысқа қатысқан.",
+        "p4": "1-, 2-, 3-дәрежелі Даңқ орденімен марапатталған.",
+        "p5": "1977 жылы дүниеден өтті."
+      }
     },
     "gallery": {
       "title": "Галерея",
+      "subtitle": "Фотосуреттер мен бейнежазбалар",
+      "description": "Тарихи сәттер. Свайптаңыз немесе көрсеткілермен ауыстырыңыз.",
       "photos": "Фотосуреттер",
       "awards": "Марапаттар",
-      "family": "Отбасы"
+      "family": "Отбасы",
+      "controls": {"prev": "Алдыңғы", "next": "Келесі", "play": "Ойнату", "pause": "Тоқтату"},
+      "slideOf": "слайд",
+      "video": "Бейне"
     },
     "legacy": {
       "title": "Мұра",
@@ -100,13 +112,25 @@
       "readFull": "Читать полностью",
       "summary1": "Кемер Онгалбаев родился в 1925 году в Мангистауской области. В 1943 году был призван в ряды Красной Армии и отправлен на фронт.",
       "summary2": "За мужество и героизм, проявленные в боях, был награжден тремя степенями ордена Славы, став полным кавалером этой почетной награды.",
-      "summary3": "После войны вернулся на родину, где продолжил трудиться во благо развития Казахстана и воспитания молодежи в духе патриотизма."
+      "summary3": "После войны вернулся на родину, где продолжил трудиться во благо развития Казахстана и воспитания молодежи в духе патриотизма.",
+      "profile": {
+        "p1": "Онгалбаев Кемер Сахиевич родился 5 декабря 1925 года в городе Форт-Шевченко, Тупкараганского района.",
+        "p2": "Ветеран войны и труда.",
+        "p3": "Участник Второй мировой войны.",
+        "p4": "Награждён орденом Славы I, II и III степени.",
+        "p5": "Скончался в 1977 году."
+      }
     },
     "gallery": {
       "title": "Галерея",
+      "subtitle": "Фотографии и видео",
+      "description": "Исторические моменты. Свайпайте или используйте стрелки.",
       "photos": "Фотографии",
       "awards": "Награды",
-      "family": "Семья"
+      "family": "Семья",
+      "controls": {"prev": "Назад", "next": "Вперёд", "play": "Пуск", "pause": "Пауза"},
+      "slideOf": "слайд",
+      "video": "Видео"
     },
     "legacy": {
       "title": "Наследие",
@@ -168,13 +192,25 @@
       "readFull": "Read full",
       "summary1": "Kemer Ongalbayev was born in 1925 in the Mangystau region. In 1943, he was drafted into the Red Army and sent to the front.",
       "summary2": "For courage and heroism shown in battles, he was awarded three degrees of the Order of Glory, becoming a full holder of this honorary award.",
-      "summary3": "After the war, he returned to his homeland, where he continued to work for the development of Kazakhstan and the patriotic education of youth."
+      "summary3": "After the war, he returned to his homeland, where he continued to work for the development of Kazakhstan and the patriotic education of youth.",
+      "profile": {
+        "p1": "Ongalbayev Kemer Sakhiyuly was born on December 5, 1925, in the city of Fort-Shevchenko, Tupkaragan district.",
+        "p2": "Veteran of war and labor.",
+        "p3": "Participant of the Second World War.",
+        "p4": "Awarded the Order of Glory, 1st, 2nd and 3rd classes.",
+        "p5": "Passed away in 1977."
+      }
     },
     "gallery": {
       "title": "Gallery",
+      "subtitle": "Photos and video",
+      "description": "Historic moments. Swipe or use arrows to navigate.",
       "photos": "Photos",
       "awards": "Awards",
-      "family": "Family"
+      "family": "Family",
+      "controls": {"prev": "Prev", "next": "Next", "play": "Play", "pause": "Pause"},
+      "slideOf": "slide",
+      "video": "Video"
     },
     "legacy": {
       "title": "Legacy",

@@ -27,7 +27,7 @@
                 {{ t('nav.gallery') }}
               </router-link>
             </li>
-            <li class="nav-item">
+            <!-- <li class="nav-item">
               <router-link to="/legacy" class="nav-link" @click="closeMenu">
                 {{ t('nav.legacy') }}
               </router-link>
@@ -36,7 +36,7 @@
               <router-link to="/contact" class="nav-link" @click="closeMenu">
                 {{ t('nav.contact') }}
               </router-link>
-            </li>
+            </li> -->
           </ul>
 
           <!-- Переключатель языков -->
