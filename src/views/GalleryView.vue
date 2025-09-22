@@ -6,14 +6,27 @@
         <p class="gallery-subtitle animate-fade-in-up">{{ t('gallery.subtitle') }}</p>
         <p class="gallery-description animate-fade-in-up" style="margin-bottom: 1.5rem;">{{ t('gallery.description') }}</p>
 
+        <!-- Controls -->
+        <div class="controls">
+          <div class="chips">
+            <button class="chip" :class="{ active: filter === 'all' }" @click="setFilter('all')">{{ t('gallery.filters.all') }}</button>
+            <button class="chip" :class="{ active: filter === 'image' }" @click="setFilter('image')">{{ t('gallery.filters.onlyPhotos') }}</button>
+            <button class="chip" :class="{ active: filter === 'video' }" @click="setFilter('video')">{{ t('gallery.filters.onlyVideos') }}</button>
+          </div>
+          <input class="search" type="search" :placeholder="t('gallery.filters.searchPlaceholder')" v-model="query" />
+        </div>
+
         <!-- Creative animated card grid -->
         <div class="masonry" ref="masonryRoot">
           <div
-            v-for="(item, index) in mediaItems"
+            v-for="(item, index) in filteredItems"
             :key="item.src"
             class="card animate-card"
-            :style="{ animationDelay: (index * 80) + 'ms' }"
-            @click="openLightbox(index)"
+            :style="{ animationDelay: (index * 60) + 'ms', transform: cardTransforms[index] }"
+            @mousemove="onTilt($event, index)"
+            @mouseleave="resetTilt(index)"
+            @click="openLightbox(indexMap[index])"
+            v-intersect
           >
             <div class="card-media-wrapper">
               <img v-if="item.type === 'image'" :src="item.src" :alt="item.name" class="card-media" loading="lazy" />
@@ -69,6 +82,8 @@ const cdnSources = [
 ]
 
 const mediaItems = ref([])
+const filter = ref('all')
+const query = ref('')
 
 const inferType = (url) => {
   const lower = url.toLowerCase()
@@ -83,6 +98,40 @@ const buildItems = () => {
     name: src.split('/').pop()
   }))
 }
+
+const filteredItems = computed(() => {
+  const q = query.value.trim().toLowerCase()
+  return mediaItems.value
+    .filter(i => (filter.value === 'all' ? true : i.type === filter.value))
+    .filter(i => (!q ? true : i.name.toLowerCase().includes(q)))
+})
+
+// Map filtered index to original index for lightbox navigation
+const indexMap = computed(() => {
+  const map = []
+  filteredItems.value.forEach(fi => {
+    const idx = mediaItems.value.findIndex(mi => mi.src === fi.src)
+    map.push(idx)
+  })
+  return map
+})
+
+// Tilt effect per card
+const cardTransforms = ref([])
+function onTilt(event, idx) {
+  const el = event.currentTarget
+  const rect = el.getBoundingClientRect()
+  const x = event.clientX - rect.left
+  const y = event.clientY - rect.top
+  const rx = ((y / rect.height) - 0.5) * -6
+  const ry = ((x / rect.width) - 0.5) * 6
+  cardTransforms.value[idx] = `perspective(800px) rotateX(${rx}deg) rotateY(${ry}deg)`
+}
+function resetTilt(idx) {
+  cardTransforms.value[idx] = 'perspective(800px) rotateX(0) rotateY(0)'
+}
+
+function setFilter(v) { filter.value = v }
 
 onMounted(() => {
   buildItems()
@@ -112,8 +161,8 @@ const lightboxOpen = ref(false)
 const lightboxIndex = ref(0)
 const currentItem = computed(() => mediaItems.value[lightboxIndex.value])
 
-function openLightbox(index) {
-  lightboxIndex.value = index
+function openLightbox(originalIndex) {
+  lightboxIndex.value = originalIndex
   lightboxOpen.value = true
 }
 function closeLightbox() {
@@ -133,6 +182,35 @@ function onKey(e) {
   if (e.key === 'ArrowRight') lightboxNext()
   if (e.key === 'ArrowLeft') lightboxPrev()
 }
+
+// Reveal on scroll directive
+const intersect = {
+  mounted(el) {
+    el.style.opacity = '0'
+    el.style.transform += ' translateY(10px)'
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          el.style.transition = 'opacity 500ms ease, transform 600ms ease'
+          el.style.opacity = '1'
+          el.style.transform = el.style.transform.replace(' translateY(10px)', '')
+          obs.disconnect()
+        }
+      })
+    }, { threshold: 0.1 })
+    obs.observe(el)
+  }
+}
+
+const vIntersect = intersect
+</script>
+
+<script>
+export default {
+  directives: {
+    intersect: (typeof vIntersect !== 'undefined' ? vIntersect : undefined)
+  }
+}
 </script>
 
 <style scoped>
@@ -148,11 +226,37 @@ function onKey(e) {
   margin-bottom: 1rem;
 }
 
-/* Masonry-like responsive grid */
-.masonry {
-  column-width: 320px;
-  column-gap: 16px;
+.controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
 }
+
+.chips { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+.chip {
+  border: 1px solid rgba(30,58,138,0.2);
+  background: #fff;
+  color: var(--kazakh-blue);
+  padding: 0.4rem 0.75rem;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: all 200ms ease;
+}
+.chip:hover { background: rgba(30,58,138,0.06); }
+.chip.active { background: var(--kazakh-blue); color: white; border-color: var(--kazakh-blue); }
+
+.search {
+  flex: 1;
+  min-width: 180px;
+  border: 1px solid rgba(30,58,138,0.2);
+  border-radius: 10px;
+  padding: 0.5rem 0.75rem;
+}
+
+/* Masonry-like responsive grid */
+.masonry { column-width: 320px; column-gap: 16px; }
 
 .card {
   break-inside: avoid;
@@ -165,106 +269,35 @@ function onKey(e) {
   box-shadow: var(--shadow-md);
   cursor: zoom-in;
   transform-origin: center;
+  transition: transform 180ms ease;
 }
 
-.card-media-wrapper {
-  position: relative;
-}
+.card-media-wrapper { position: relative; }
 
-.card-media {
-  width: 100%;
-  display: block;
-  transition: transform 400ms ease, filter 400ms ease;
-}
+.card-media { width: 100%; display: block; transition: transform 400ms ease, filter 400ms ease; }
 
 .video-badge {
-  width: 100%;
-  aspect-ratio: 16/9;
-  display: grid;
-  place-items: center;
-  background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.15), rgba(0,0,0,0.5)), url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22/%3E');
-  color: #fff;
-  font-size: 2rem;
+  width: 100%; aspect-ratio: 16/9; display: grid; place-items: center;
+  background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.15), rgba(0,0,0,0.5));
+  color: #fff; font-size: 2rem;
 }
 
-.card-overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, rgba(0,0,0,0) 50%, rgba(0,0,0,0.6) 100%);
-  opacity: 0;
-  transition: opacity 300ms ease;
-  display: flex;
-  align-items: flex-end;
-  padding: 0.75rem 1rem;
-}
+.card-overlay { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,0) 50%, rgba(0,0,0,0.6) 100%); opacity: 0; transition: opacity 300ms ease; display: flex; align-items: flex-end; padding: 0.75rem 1rem; }
+.card-caption { color: #fff; font-weight: 500; }
 
-.card-caption {
-  color: #fff;
-  font-weight: 500;
-}
-
-.card:hover .card-media {
-  transform: scale(1.05);
-  filter: saturate(1.1);
-}
-
-.card:hover .card-overlay {
-  opacity: 1;
-}
+.card:hover .card-media { transform: scale(1.05); filter: saturate(1.1); }
+.card:hover .card-overlay { opacity: 1; }
 
 /* Enter animations */
-@keyframes cardIn {
-  from { opacity: 0; transform: translateY(16px) scale(0.98); }
-  to { opacity: 1; transform: translateY(0) scale(1); }
-}
-
+@keyframes cardIn { from { opacity: 0; transform: translateY(16px) scale(0.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
 .animate-card { animation: cardIn 600ms cubic-bezier(0.22,1,0.36,1) both; }
 
 /* Lightbox */
-.lightbox {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.9);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 2000;
-}
-
-.lightbox-content {
-  max-width: 95vw;
-  max-height: 92vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.lightbox-media {
-  max-width: 95vw;
-  max-height: 86vh;
-  object-fit: contain;
-  border-radius: 10px;
-  box-shadow: var(--shadow-xl);
-}
-
-.lightbox-caption {
-  color: #fff;
-  opacity: 0.85;
-}
-
-.lightbox-close {
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-}
-
-.lightbox-arrow {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-}
-
-.lightbox-arrow.left { left: 1rem; }
-.lightbox-arrow.right { right: 1rem; }
+.lightbox { position: fixed; inset: 0; background: rgba(0,0,0,0.9); display: flex; align-items: center; justify-content: center; z-index: 2000; }
+.lightbox-content { max-width: 95vw; max-height: 92vh; display: flex; flex-direction: column; align-items: center; gap: 0.5rem; }
+.lightbox-media { max-width: 95vw; max-height: 86vh; object-fit: contain; border-radius: 10px; box-shadow: var(--shadow-xl); }
+.lightbox-caption { color: #fff; opacity: 0.85; }
+.lightbox-close { position: absolute; top: 1rem; right: 1rem; }
+.lightbox-arrow { position: absolute; top: 50%; transform: translateY(-50%); }
+.lightbox-arrow.left { left: 1rem; } .lightbox-arrow.right { right: 1rem; }
 </style>

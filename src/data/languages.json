@@ -50,7 +50,8 @@
       "family": "Отбасы",
       "controls": {"prev": "Алдыңғы", "next": "Келесі", "play": "Ойнату", "pause": "Тоқтату"},
       "slideOf": "слайд",
-      "video": "Бейне"
+      "video": "Бейне",
+      "filters": {"all": "Барлығы", "onlyPhotos": "Тек фото", "onlyVideos": "Тек бейне", "searchPlaceholder": "Іздеу..." }
     },
     "legacy": {
       "title": "Мұра",
@@ -130,7 +131,8 @@
       "family": "Семья",
       "controls": {"prev": "Назад", "next": "Вперёд", "play": "Пуск", "pause": "Пауза"},
       "slideOf": "слайд",
-      "video": "Видео"
+      "video": "Видео",
+      "filters": {"all": "Все", "onlyPhotos": "Только фото", "onlyVideos": "Только видео", "searchPlaceholder": "Поиск..." }
     },
     "legacy": {
       "title": "Наследие",
@@ -210,7 +212,8 @@
       "family": "Family",
       "controls": {"prev": "Prev", "next": "Next", "play": "Play", "pause": "Pause"},
       "slideOf": "slide",
-      "video": "Video"
+      "video": "Video",
+      "filters": {"all": "All", "onlyPhotos": "Photos", "onlyVideos": "Videos", "searchPlaceholder": "Search..." }
     },
     "legacy": {
       "title": "Legacy",
