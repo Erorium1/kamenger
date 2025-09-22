@@ -68,9 +68,16 @@ const t = (key) => {
   return result || key
 }
 
-// Import media from assets/img via Vite glob
-const imageModules = import.meta.glob('../assets/img/*.{png,jpg,jpeg,gif,webp}', { eager: true, as: 'url' })
-const videoModules = import.meta.glob('../assets/img/*.{mp4,webm,ogg}', { eager: true, as: 'url' })
+// Static CDN sources (provided by user)
+const cdnSources = [
+  'https://res.cloudinary.com/demc61dkq/image/upload/v1758533996/Picture7_jesnga.png',
+  'https://res.cloudinary.com/demc61dkq/image/upload/v1758533996/Picture6_a9mh5h.png',
+  'https://res.cloudinary.com/demc61dkq/image/upload/v1758533995/Picture5_pagzza.png',
+  'https://res.cloudinary.com/demc61dkq/video/upload/v1758533995/WhatsApp_Video_2025-09-19_at_19.26.03_btsbfo.mp4',
+  'https://res.cloudinary.com/demc61dkq/image/upload/v1758533993/Picture2_hvkbiu.png',
+  'https://res.cloudinary.com/demc61dkq/image/upload/v1758533990/Picture4_ual3yv.png',
+  'https://res.cloudinary.com/demc61dkq/image/upload/v1758533988/Picture1_rpcsca.png'
+]
 
 const mediaItems = ref([])
 const currentIndex = ref(0)
@@ -78,18 +85,18 @@ const intervalMs = 4000
 let timer = null
 const isPlaying = ref(true)
 
+const inferType = (url) => {
+  const lower = url.toLowerCase()
+  if (lower.endsWith('.mp4') || lower.endsWith('.webm') || lower.endsWith('.ogg')) return 'video'
+  return 'image'
+}
+
 const buildItems = () => {
-  const images = Object.entries(imageModules).map(([key, url]) => ({
-    type: 'image',
-    src: url,
-    name: key.split('/').pop()
+  mediaItems.value = cdnSources.map((src) => ({
+    type: inferType(src),
+    src,
+    name: src.split('/').pop()
   }))
-  const videos = Object.entries(videoModules).map(([key, url]) => ({
-    type: 'video',
-    src: url,
-    name: key.split('/').pop()
-  }))
-  mediaItems.value = [...images, ...videos]
 }
 
 const next = () => {
