@@ -61,11 +61,19 @@
       </div>
       <button class="lightbox-arrow right btn-secondary" @click="lightboxNext">▶</button>
     </div>
+
+    <!-- 3D Model Viewer -->
+    <section class="section" style="padding-top: 0;">
+      <div class="container">
+        <FbxViewer src="/remote-fbx/docs/kemer.fbx" background="transparent" />
+      </div>
+    </section>
   </div>
 </template>
 
 <script setup>
 import { ref, onMounted, onBeforeUnmount, inject, computed } from 'vue'
+import FbxViewer from '@/components/FbxViewer.vue'
 
 const translations = inject('translations')
 const currentLanguage = inject('currentLanguage')

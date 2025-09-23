@@ -10,6 +10,15 @@ export default defineConfig({
     vue(),
     vueDevTools(),
   ],
+  server: {
+    proxy: {
+      '/remote-fbx': {
+        target: 'https://caspianstartup.kz',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/remote-fbx/, '')
+      }
+    }
+  },
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
