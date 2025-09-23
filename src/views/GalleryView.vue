@@ -4,38 +4,44 @@
       <div class="container">
         <h1 class="section-title animate-fade-in-down">{{ t('gallery.title') }}</h1>
         <p class="gallery-subtitle animate-fade-in-up">{{ t('gallery.subtitle') }}</p>
-        <p class="gallery-description animate-fade-in-up" style="margin-bottom: 1.5rem;">{{ t('gallery.description') }}</p>
+        <p class="gallery-description animate-fade-in-up" style="margin-bottom: 1.5rem;">{{ t('gallery.description') }}
+        </p>
 
         <!-- Controls -->
         <div class="controls">
           <div class="chips">
-            <button class="chip" :class="{ active: filter === 'all' }" @click="setFilter('all')">{{ t('gallery.filters.all') }}</button>
-            <button class="chip" :class="{ active: filter === 'image' }" @click="setFilter('image')">{{ t('gallery.filters.onlyPhotos') }}</button>
-            <button class="chip" :class="{ active: filter === 'video' }" @click="setFilter('video')">{{ t('gallery.filters.onlyVideos') }}</button>
+            <button class="chip" :class="{ active: filter === 'all' }" @click="setFilter('all')">{{
+              t('gallery.filters.all') }}</button>
+            <button class="chip" :class="{ active: filter === 'image' }" @click="setFilter('image')">{{
+              t('gallery.filters.onlyPhotos') }}</button>
+            <button class="chip" :class="{ active: filter === 'video' }" @click="setFilter('video')">{{
+              t('gallery.filters.onlyVideos') }}</button>
           </div>
           <input class="search" type="search" :placeholder="t('gallery.filters.searchPlaceholder')" v-model="query" />
         </div>
 
-        <!-- Creative animated card grid -->
-        <div class="masonry" ref="masonryRoot">
-          <div
-            v-for="(item, index) in filteredItems"
-            :key="item.src"
-            class="card animate-card"
-            :style="{ animationDelay: (index * 60) + 'ms', transform: cardTransforms[index] }"
-            @mousemove="onTilt($event, index)"
-            @mouseleave="resetTilt(index)"
-            @click="openLightbox(indexMap[index])"
-            v-intersect
-          >
-            <div class="card-media-wrapper">
-              <img v-if="item.type === 'image'" :src="item.src" :alt="item.name" class="card-media" loading="lazy" />
-              <div v-else class="video-badge">▶</div>
-            </div>
-            <div class="card-overlay">
-              <span class="card-caption">{{ briefName(item.name) }}</span>
+        <!-- 3D Ring Carousel -->
+        <div class="ring-carousel">
+          <button class="carousel-nav prev btn-secondary" @click="carouselPrev">◀</button>
+          <div class="stage">
+            <div class="container" ref="containerEl"
+              :style="{ '--radius': radius + 'px', '--panel-w': panelW + 'px', '--panel-h': panelH + 'px' }">
+              <div class="ring" :style="{ transform: `translateZ(-${radius}px) rotateY(${rotationY}deg)` }">
+                <div v-for="(item, index) in filteredItems" :key="item.src" class="panel"
+                  :style="{ transform: `rotateY(${angleStep * index}deg) translateZ(${radius}px)` }"
+                  @click="openLightbox(indexMap[index])">
+                  <template v-if="item.type === 'image'">
+                    <img :src="item.src" :alt="item.name" class="panel-media" loading="lazy" />
+                  </template>
+                  <template v-else>
+                    <div class="video-badge panel-video">▶</div>
+                  </template>
+                  <div class="panel-caption">{{ briefName(item.name) }}</div>
+                </div>
+              </div>
             </div>
           </div>
+          <button class="carousel-nav next btn-secondary" @click="carouselNext">▶</button>
         </div>
       </div>
     </section>
@@ -116,20 +122,38 @@ const indexMap = computed(() => {
   return map
 })
 
-// Tilt effect per card
-const cardTransforms = ref([])
-function onTilt(event, idx) {
-  const el = event.currentTarget
-  const rect = el.getBoundingClientRect()
-  const x = event.clientX - rect.left
-  const y = event.clientY - rect.top
-  const rx = ((y / rect.height) - 0.5) * -6
-  const ry = ((x / rect.width) - 0.5) * 6
-  cardTransforms.value[idx] = `perspective(800px) rotateX(${rx}deg) rotateY(${ry}deg)`
+// 3D ring carousel state
+const rotationY = ref(0)
+const containerEl = ref(null)
+const radius = ref(520)
+const panelW = ref(320)
+const panelH = ref(420)
+const angleStep = computed(() => (filteredItems.value.length ? 360 / filteredItems.value.length : 0))
+
+function recalcSizes() {
+  const el = containerEl.value
+  if (!el) return
+  const cw = el.clientWidth
+  // Panel sized relative to container width
+  panelW.value = Math.max(260, Math.min(420, Math.floor(cw * 0.32)))
+  panelH.value = Math.floor(panelW.value * 1.25)
+  radius.value = Math.max(380, Math.min(900, Math.floor(cw * 0.6)))
 }
-function resetTilt(idx) {
-  cardTransforms.value[idx] = 'perspective(800px) rotateX(0) rotateY(0)'
-}
+
+onMounted(() => {
+  buildItems()
+  recalcSizes()
+  window.addEventListener('resize', recalcSizes)
+  window.addEventListener('keydown', onKey)
+})
+
+onBeforeUnmount(() => {
+  window.removeEventListener('resize', recalcSizes)
+  window.removeEventListener('keydown', onKey)
+})
+
+function carouselNext() { rotationY.value -= angleStep.value }
+function carouselPrev() { rotationY.value += angleStep.value }
 
 function setFilter(v) { filter.value = v }
 
@@ -220,6 +244,7 @@ export default {
   font-weight: 600;
   margin-bottom: 0.5rem;
 }
+
 .gallery-description {
   text-align: center;
   color: #475569;
@@ -231,12 +256,17 @@ export default {
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
-  margin-bottom: 1rem;
+  margin-bottom: 0;
 }
 
-.chips { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+.chips {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
 .chip {
-  border: 1px solid rgba(30,58,138,0.2);
+  border: 1px solid rgba(30, 58, 138, 0.2);
   background: #fff;
   color: var(--kazakh-blue);
   padding: 0.4rem 0.75rem;
@@ -244,60 +274,172 @@ export default {
   cursor: pointer;
   transition: all 200ms ease;
 }
-.chip:hover { background: rgba(30,58,138,0.06); }
-.chip.active { background: var(--kazakh-blue); color: white; border-color: var(--kazakh-blue); }
+
+.chip:hover {
+  background: rgba(30, 58, 138, 0.06);
+}
+
+.chip.active {
+  background: var(--kazakh-blue);
+  color: white;
+  border-color: var(--kazakh-blue);
+}
 
 .search {
   flex: 1;
   min-width: 180px;
-  border: 1px solid rgba(30,58,138,0.2);
+  border: 1px solid rgba(30, 58, 138, 0.2);
   border-radius: 10px;
   padding: 0.5rem 0.75rem;
 }
 
-/* Masonry-like responsive grid */
-.masonry { column-width: 320px; column-gap: 16px; }
+/* 3D ring carousel styles (inspired by referenced CodePen) */
+.ring-carousel {
+  position: relative;
+  display: grid;
+  grid-template-columns: 48px 1fr 48px;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+}
 
-.card {
-  break-inside: avoid;
-  margin-bottom: 16px;
+.ring-carousel {
+  margin-top: 0;
+}
+
+.stage {
+  margin-top: 0;
+}
+
+.carousel-nav {
+  height: 44px;
+  width: 44px;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  z-index: 2;
+}
+
+.stage {
+  position: relative;
+  height: min(72vh, 680px);
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  background: transparent;
+  border-radius: 16px;
+  width: 100%;
+}
+
+.container {
+  perspective: 2000px;
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.ring {
+  width: 100%;
+  height: 30%;
+  position: absolute;
+  transform-style: preserve-3d;
+  transition: transform 800ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.panel {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: var(--panel-w);
+  height: var(--panel-h);
+  transform-style: preserve-3d;
+  transform-origin: center center;
   border-radius: 14px;
   overflow: hidden;
-  position: relative;
+  box-shadow: var(--shadow-lg);
   background: var(--kazakh-white);
   border: 1px solid rgba(30, 58, 138, 0.1);
-  box-shadow: var(--shadow-md);
   cursor: zoom-in;
-  transform-origin: center;
-  transition: transform 180ms ease;
 }
 
-.card-media-wrapper { position: relative; }
-
-.card-media { width: 100%; display: block; transition: transform 400ms ease, filter 400ms ease; }
-
-.video-badge {
-  width: 100%; aspect-ratio: 16/9; display: grid; place-items: center;
-  background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.15), rgba(0,0,0,0.5));
-  color: #fff; font-size: 2rem;
+.panel-media {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
-.card-overlay { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,0) 50%, rgba(0,0,0,0.6) 100%); opacity: 0; transition: opacity 300ms ease; display: flex; align-items: flex-end; padding: 0.75rem 1rem; }
-.card-caption { color: #fff; font-weight: 500; }
+.panel-video {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  font-size: 2rem;
+  background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.12), rgba(0, 0, 0, 0.6));
+}
 
-.card:hover .card-media { transform: scale(1.05); filter: saturate(1.1); }
-.card:hover .card-overlay { opacity: 1; }
-
-/* Enter animations */
-@keyframes cardIn { from { opacity: 0; transform: translateY(16px) scale(0.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
-.animate-card { animation: cardIn 600ms cubic-bezier(0.22,1,0.36,1) both; }
+.panel-caption {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  color: #fff;
+  padding: 0.5rem 0.75rem;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.7) 100%);
+  font-weight: 500;
+}
 
 /* Lightbox */
-.lightbox { position: fixed; inset: 0; background: rgba(0,0,0,0.9); display: flex; align-items: center; justify-content: center; z-index: 2000; }
-.lightbox-content { max-width: 95vw; max-height: 92vh; display: flex; flex-direction: column; align-items: center; gap: 0.5rem; }
-.lightbox-media { max-width: 95vw; max-height: 86vh; object-fit: contain; border-radius: 10px; box-shadow: var(--shadow-xl); }
-.lightbox-caption { color: #fff; opacity: 0.85; }
-.lightbox-close { position: absolute; top: 1rem; right: 1rem; }
-.lightbox-arrow { position: absolute; top: 50%; transform: translateY(-50%); }
-.lightbox-arrow.left { left: 1rem; } .lightbox-arrow.right { right: 1rem; }
+.lightbox {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+}
+
+.lightbox-content {
+  max-width: 95vw;
+  max-height: 92vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.lightbox-media {
+  max-width: 95vw;
+  max-height: 86vh;
+  object-fit: contain;
+  border-radius: 10px;
+  box-shadow: var(--shadow-xl);
+}
+
+.lightbox-caption {
+  color: #fff;
+  opacity: 0.85;
+}
+
+.lightbox-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+}
+
+.lightbox-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.lightbox-arrow.left {
+  left: 1rem;
+}
+
+.lightbox-arrow.right {
+  right: 1rem;
+}
 </style>
