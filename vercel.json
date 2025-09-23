@@ -1,0 +1,7 @@
+{
+  "rewrites": [
+    { "source": "/remote-fbx/(.*)", "destination": "https://caspianstartup.kz/$1" }
+  ]
+}
+
+
