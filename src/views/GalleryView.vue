@@ -40,7 +40,7 @@
                   <template v-else>
                     <div class="video-badge panel-video">▶</div>
                   </template>
-                  <div class="panel-caption">{{ briefName(item.name) }}</div>
+                  <!-- <div class="panel-caption">{{ briefName(item.name) }}</div> -->
                 </div>
               </div>
             </div>
@@ -75,6 +75,20 @@
         <FbxViewer :src="fbxSrc" background="transparent" />
       </div>
     </section>
+
+    <!-- External video callout (VK) -->
+    <section class="section" style="padding-top: 0;">
+      <div class="container">
+        <div class="external-video" v-intersect>
+          <div class="external-video__text">
+            <h2 class="external-video__title">{{ t('gallery.videoCallout.title') }}</h2>
+            <p class="external-video__desc">{{ t('gallery.videoCallout.desc') }}</p>
+            <a class="btn-primary external-video__btn" href="https://m.vk.com/video-59740949_171713436" target="_blank"
+              rel="noopener noreferrer"><strong>{{ t('gallery.videoCallout.open') }}</strong></a>
+          </div>
+        </div>
+      </div>
+    </section>
   </div>
 </template>
 
@@ -100,7 +114,9 @@ const cdnSources = [
   'https://res.cloudinary.com/demc61dkq/video/upload/v1758533995/WhatsApp_Video_2025-09-19_at_19.26.03_btsbfo.mp4',
   'https://res.cloudinary.com/demc61dkq/image/upload/v1758533993/Picture2_hvkbiu.png',
   'https://res.cloudinary.com/demc61dkq/image/upload/v1758533990/Picture4_ual3yv.png',
-  'https://res.cloudinary.com/demc61dkq/image/upload/v1758533988/Picture1_rpcsca.png'
+  'https://res.cloudinary.com/demc61dkq/image/upload/v1758533988/Picture1_rpcsca.png',
+  'https://res.cloudinary.com/demc61dkq/image/upload/v1758651830/WhatsApp_Image_2025-09-23_at_23.11.52_1_pqd78g.jpg',
+  'https://res.cloudinary.com/demc61dkq/image/upload/v1758651988/WhatsApp_Image_2025-09-23_at_23.11.52_2_qgxr28.jpg'
 ]
 
 const mediaItems = ref([])
@@ -494,5 +510,41 @@ export default {
 
 .lightbox-arrow.right {
   right: 1rem;
+}
+
+/* VK video callout */
+.external-video {
+  border: 1px solid rgba(30, 58, 138, 0.12);
+  border-radius: 16px;
+  padding: 1.5rem;
+  background: linear-gradient(180deg, rgba(30, 58, 138, 0.04), rgba(30, 58, 138, 0.02));
+  box-shadow: var(--shadow-sm);
+  display: grid;
+  place-items: center;
+  text-align: center;
+}
+
+.external-video__title {
+  margin: 0 0 0.25rem 0;
+  color: var(--kazakh-blue);
+}
+
+.external-video__desc {
+  margin: 0 0 0.75rem 0;
+  color: #475569;
+}
+
+.external-video__btn {
+  display: inline-block;
+  padding: 0.55rem 1rem;
+  border-radius: 10px;
+}
+
+.external-video__thumb {
+  width: 84px;
+  height: 84px;
+  border-radius: 12px;
+  object-fit: cover;
+  border: 1px solid rgba(30, 58, 138, 0.12);
 }
 </style>

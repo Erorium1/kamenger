@@ -10,7 +10,7 @@
     "home": {
       "title": "Кемер Онғалбаев",
       "subtitle": "Ұлы Отан соғысының батыры",
-      "description": "Толық даңқ орденінің иегері, патриоттық пен ерліктің символы",
+      "description": "Толық Даңқ орденінің иегері, патриоттық пен ерліктің символы",
       "learnMore": "Толығырақ білу",
       "heroQuote": "Тектілікке тағзым - ұрпақ парызы",
       "portrait": "Батырдың портреті",
@@ -51,7 +51,8 @@
       "controls": {"prev": "Алдыңғы", "next": "Келесі", "play": "Ойнату", "pause": "Тоқтату"},
       "slideOf": "слайд",
       "video": "Бейне",
-      "filters": {"all": "Барлығы", "onlyPhotos": "Тек фото", "onlyVideos": "Тек бейне", "searchPlaceholder": "Іздеу..." }
+      "filters": {"all": "Барлығы", "onlyPhotos": "Тек фото", "onlyVideos": "Тек бейне", "searchPlaceholder": "Іздеу..." },
+      "videoCallout": {"title": "Бейне", "desc": "VK-та видеоны қараңыз", "open": "Видеоны ашу"}
     },
     "legacy": {
       "title": "Мұра",
@@ -68,7 +69,7 @@
     },
     "footer": {
       "title": "Кемер Онғалбаев",
-      "description": "Ұлы Отан соғысының батыры, толық даңқ орденінің иегері. Оның ерлігі мен патриоттығы біздің ұрпаққа үлгі болады.",
+      "description": "Ұлы Отан соғысының батыры, толық Даңқ орденінің иегері. Оның ерлігі мен патриоттығы біздің ұрпаққа үлгі болады.",
       "hero": "Батыр",
       "patriot": "Патриот",
       "navigation": "Навигация",
@@ -132,7 +133,8 @@
       "controls": {"prev": "Назад", "next": "Вперёд", "play": "Пуск", "pause": "Пауза"},
       "slideOf": "слайд",
       "video": "Видео",
-      "filters": {"all": "Все", "onlyPhotos": "Только фото", "onlyVideos": "Только видео", "searchPlaceholder": "Поиск..." }
+      "filters": {"all": "Все", "onlyPhotos": "Только фото", "onlyVideos": "Только видео", "searchPlaceholder": "Поиск..." },
+      "videoCallout": {"title": "Видео", "desc": "Смотрите ролик ВКонтакте", "open": "Открыть видео"}
     },
     "legacy": {
       "title": "Наследие",
@@ -213,7 +215,8 @@
       "controls": {"prev": "Prev", "next": "Next", "play": "Play", "pause": "Pause"},
       "slideOf": "slide",
       "video": "Video",
-      "filters": {"all": "All", "onlyPhotos": "Photos", "onlyVideos": "Videos", "searchPlaceholder": "Search..." }
+      "filters": {"all": "All", "onlyPhotos": "Photos", "onlyVideos": "Videos", "searchPlaceholder": "Search..." },
+      "videoCallout": {"title": "Video", "desc": "Watch on VK", "open": "Open video"}
     },
     "legacy": {
       "title": "Legacy",
