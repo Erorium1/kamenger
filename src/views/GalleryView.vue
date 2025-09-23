@@ -81,7 +81,7 @@
 <script setup>
 import { ref, onMounted, onBeforeUnmount, inject, computed } from 'vue'
 import FbxViewer from '@/components/FbxViewer.vue'
-const fbxSrc = import.meta.env.DEV ? '/remote-fbx/docs/kemer.fbx' : 'https://caspianstartup.kz/docs/kemer.fbx'
+const fbxSrc = '/models/kemer.fbx'
 
 const translations = inject('translations')
 const currentLanguage = inject('currentLanguage')
