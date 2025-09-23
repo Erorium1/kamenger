@@ -31,7 +31,11 @@
                   :style="{ transform: `rotateY(${angleStep * index}deg) translateZ(${radius}px)` }"
                   @click="openLightbox(indexMap[index])">
                   <template v-if="item.type === 'image'">
-                    <img :src="item.src" :alt="item.name" class="panel-media" loading="lazy" />
+                    <div class="media-wrap">
+                      <img :src="item.src" :alt="item.name" class="panel-media" loading="lazy"
+                        @load="onMediaLoad(item.src)" :class="{ 'is-loading': !isLoaded(item.src) }" />
+                      <div v-if="!isLoaded(item.src)" class="loader-overlay"><span class="spinner"></span></div>
+                    </div>
                   </template>
                   <template v-else>
                     <div class="video-badge panel-video">▶</div>
@@ -52,7 +56,10 @@
       <button class="lightbox-arrow left btn-secondary" @click="lightboxPrev">◀</button>
       <div class="lightbox-content">
         <template v-if="currentItem?.type === 'image'">
-          <img :src="currentItem.src" :alt="currentItem.name" class="lightbox-media" />
+          <div class="media-wrap">
+            <img :src="currentItem.src" :alt="currentItem.name" class="lightbox-media" @load="lightboxLoaded = true" />
+            <div v-if="!lightboxLoaded" class="loader-overlay"><span class="spinner"></span></div>
+          </div>
         </template>
         <template v-else>
           <video class="lightbox-media" :src="currentItem.src" controls autoplay></video>
@@ -65,7 +72,7 @@
     <!-- 3D Model Viewer -->
     <section class="section" style="padding-top: 0;">
       <div class="container">
-        <FbxViewer src="/remote-fbx/docs/kemer.fbx" background="transparent" />
+        <FbxViewer :src="fbxSrc" background="transparent" />
       </div>
     </section>
   </div>
@@ -74,6 +81,7 @@
 <script setup>
 import { ref, onMounted, onBeforeUnmount, inject, computed } from 'vue'
 import FbxViewer from '@/components/FbxViewer.vue'
+const fbxSrc = import.meta.env.DEV ? '/remote-fbx/docs/kemer.fbx' : 'https://caspianstartup.kz/docs/kemer.fbx'
 
 const translations = inject('translations')
 const currentLanguage = inject('currentLanguage')
@@ -98,6 +106,8 @@ const cdnSources = [
 const mediaItems = ref([])
 const filter = ref('all')
 const query = ref('')
+const loadedSet = ref(new Set())
+const lightboxLoaded = ref(false)
 
 const inferType = (url) => {
   const lower = url.toLowerCase()
@@ -188,6 +198,13 @@ function briefName(name) {
   return name.replace(/\.[^/.]+$/, '').slice(0, 30)
 }
 
+function onMediaLoad(src) {
+  loadedSet.value.add(src)
+}
+function isLoaded(src) {
+  return loadedSet.value.has(src)
+}
+
 // Lightbox state
 const lightboxOpen = ref(false)
 const lightboxIndex = ref(0)
@@ -195,6 +212,7 @@ const currentItem = computed(() => mediaItems.value[lightboxIndex.value])
 
 function openLightbox(originalIndex) {
   lightboxIndex.value = originalIndex
+  lightboxLoaded.value = false
   lightboxOpen.value = true
 }
 function closeLightbox() {
@@ -375,6 +393,33 @@ export default {
   height: 100%;
   object-fit: cover;
   display: block;
+}
+
+.media-wrap {
+  position: relative;
+}
+
+.loader-overlay {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.02), rgba(0, 0, 0, 0.12));
+}
+
+.spinner {
+  width: 28px;
+  height: 28px;
+  border: 3px solid rgba(255, 255, 255, 0.6);
+  border-top-color: var(--kazakh-blue);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .panel-video {

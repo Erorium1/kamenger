@@ -1,6 +1,7 @@
 <template>
     <div class="fbx-viewer" ref="root">
         <canvas ref="canvas"></canvas>
+        <div v-if="loading" class="overlay"><span class="spinner"></span></div>
     </div>
 
 </template>
@@ -21,6 +22,7 @@ const root = ref(null)
 const canvas = ref(null)
 
 let renderer, scene, camera, controls, animationId
+const loading = ref(true)
 
 function resize() {
     if (!root.value || !renderer || !camera) return
@@ -88,10 +90,12 @@ onMounted(() => {
             obj.scale.setScalar(scale)
             scene.add(obj)
             animate()
+            loading.value = false
         },
         undefined,
         (err) => {
             console.error('FBX load error', err)
+            loading.value = false
         }
     )
 
@@ -126,5 +130,28 @@ canvas {
     width: 100%;
     height: 100%;
     display: block;
+}
+
+.overlay {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.02), rgba(0, 0, 0, 0.12));
+}
+
+.spinner {
+    width: 32px;
+    height: 32px;
+    border: 3px solid rgba(255, 255, 255, 0.7);
+    border-top-color: var(--kazakh-blue);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
 }
 </style>
