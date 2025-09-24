@@ -89,13 +89,26 @@
         </div>
       </div>
     </section>
+
+    <!-- Inline video preview -->
+    <section class="section" style="padding-top: 0;">
+      <div class="container">
+        <div class="inline-video" v-intersect>
+          <video class="inline-video__player" :src="videoSrc" :poster="videoPoster" controls preload="metadata"
+            playsinline></video>
+        </div>
+      </div>
+    </section>
+
   </div>
 </template>
 
 <script setup>
 import { ref, onMounted, onBeforeUnmount, inject, computed } from 'vue'
 import FbxViewer from '@/components/FbxViewer.vue'
+import videoPoster from '@/assets/img/Picture7.png'
 const fbxSrc = 'https://caspianstartup.kz/docs/Kemer3D.glb'
+const videoSrc = 'https://caspianstartup.kz/docs/soldat.mp4'
 
 const translations = inject('translations')
 const currentLanguage = inject('currentLanguage')
@@ -116,7 +129,6 @@ const cdnSources = [
   'https://res.cloudinary.com/demc61dkq/image/upload/v1758533990/Picture4_ual3yv.png',
   'https://res.cloudinary.com/demc61dkq/image/upload/v1758533988/Picture1_rpcsca.png',
   'https://res.cloudinary.com/demc61dkq/image/upload/v1758651830/WhatsApp_Image_2025-09-23_at_23.11.52_1_pqd78g.jpg',
-  'https://res.cloudinary.com/demc61dkq/image/upload/v1758651988/WhatsApp_Image_2025-09-23_at_23.11.52_2_qgxr28.jpg',
   'https://res.cloudinary.com/demc61dkq/image/upload/v1758704604/WhatsApp_Image_2025-09-24_at_11.02.05_yqdjir.jpg',
   'https://res.cloudinary.com/demc61dkq/image/upload/v1758704604/WhatsApp_Image_2025-09-24_at_11.02.07_km0ks3.jpg',
   'https://res.cloudinary.com/demc61dkq/image/upload/v1758704603/WhatsApp_Image_2025-09-24_at_11.02.06_ktcwj2.jpg',
@@ -541,6 +553,30 @@ export default {
   display: inline-block;
   padding: 0.55rem 1rem;
   border-radius: 10px;
+}
+
+/* Inline video */
+.inline-video {
+  display: grid;
+  gap: 8px;
+  place-items: center;
+}
+
+.inline-video__player {
+  width: 70%;
+  border-radius: 16px;
+  border: 1px solid rgba(30, 58, 138, 0.12);
+  box-shadow: var(--shadow-sm);
+}
+
+.inline-video__caption {
+  text-align: center;
+  color: #475569;
+}
+
+.inline-video__caption .link {
+  color: var(--kazakh-blue);
+  font-weight: 600;
 }
 
 .external-video__thumb {

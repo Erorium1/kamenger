@@ -5,7 +5,7 @@
       <div class="hero-background">
         <div class="hero-overlay"></div>
       </div>
-      
+
       <div class="hero-content-wrapper">
         <div class="hero-content">
           <div class="hero-text animate-fade-in-up">
@@ -30,12 +30,15 @@
               </button>
             </div>
           </div>
-          
+
           <div class="hero-image animate-fade-in-up" style="animation-delay: 0.3s">
             <div class="hero-portrait animate-float">
               <div class="portrait-placeholder">
-                <span class="portrait-icon animate-rotate-3d">🏅</span>
-                <p class="portrait-text">{{ t('home.portrait') }}</p>
+                <!-- <span class="portrait-icon animate-rotate-3d">🏅</span>
+                <p class="portrait-text">{{ t('home.portrait') }}</p> -->
+                <img
+                  src="https://res.cloudinary.com/demc61dkq/image/upload/v1758704604/WhatsApp_Image_2025-09-24_at_11.02.07_km0ks3.jpg"
+                  alt="" style="transform: scale(0.39);">
               </div>
             </div>
           </div>
@@ -52,11 +55,8 @@
             <div class="canvas-icon">📊</div>
             <h3>{{ t('home.canvasTitle') }}</h3>
             <p>{{ t('home.canvasDescription') }}</p>
-            <a 
-              href="https://www.canva.com/design/DAGS31Y2ZwE/_vvTNG9fnZMrCN5h13PvOg/edit" 
-              target="_blank" 
-              class="btn btn-primary"
-            >
+            <a href="https://www.canva.com/design/DAGS31Y2ZwE/_vvTNG9fnZMrCN5h13PvOg/edit" target="_blank"
+              class="btn btn-primary">
               {{ t('home.viewCanvas') }}
             </a>
           </div>
@@ -85,7 +85,7 @@
               {{ t('biography.readFull') }}
             </router-link>
           </div>
-          
+
           <div class="bio-stats animate-slide-in-right">
             <div class="stat-card animate-bounce-in" style="animation-delay: 0.1s;">
               <div class="stat-number">1925</div>
@@ -122,11 +122,11 @@ const currentLanguage = inject('currentLanguage')
 const t = (key) => {
   const keys = key.split('.')
   let result = translations.value[currentLanguage.value]
-  
+
   for (const k of keys) {
     result = result?.[k]
   }
-  
+
   return result || key
 }
 
@@ -261,7 +261,7 @@ const scrollToTimeline = () => {
   height: 400px;
   border-radius: 20px;
   overflow: hidden;
-  box-shadow: 
+  box-shadow:
     var(--shadow-xl),
     0 0 30px rgba(212, 160, 23, 0.3),
     inset 0 0 50px rgba(255, 255, 255, 0.1);
@@ -270,11 +270,12 @@ const scrollToTimeline = () => {
   border: 2px solid rgba(255, 255, 255, 0.2);
   transform-style: preserve-3d;
   transition: all 0.5s ease;
+  margin-top: 12px;
 }
 
 .hero-portrait:hover {
   transform: translateY(-10px) rotateX(5deg) rotateY(5deg);
-  box-shadow: 
+  box-shadow:
     0 20px 40px rgba(0, 0, 0, 0.3),
     0 0 50px rgba(212, 160, 23, 0.5),
     inset 0 0 60px rgba(255, 255, 255, 0.2);
@@ -374,7 +375,7 @@ const scrollToTimeline = () => {
   padding: 2rem 1.5rem;
   border-radius: 15px;
   text-align: center;
-  box-shadow: 
+  box-shadow:
     var(--shadow-md),
     0 0 20px rgba(30, 58, 138, 0.1);
   transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -384,7 +385,7 @@ const scrollToTimeline = () => {
 
 .stat-card:hover {
   transform: translateY(-10px) rotateX(5deg) scale(1.02);
-  box-shadow: 
+  box-shadow:
     var(--shadow-xl),
     0 0 30px rgba(30, 58, 138, 0.2),
     0 0 50px rgba(212, 160, 23, 0.1);
@@ -410,17 +411,17 @@ const scrollToTimeline = () => {
   .hero-content-wrapper {
     padding: 0 30px;
   }
-  
+
   .hero-content {
     flex-direction: column;
     gap: 40px;
     text-align: center;
   }
-  
+
   .hero-title {
     font-size: 3rem;
   }
-  
+
   .hero-portrait {
     width: 280px;
     height: 360px;
@@ -440,11 +441,11 @@ const scrollToTimeline = () => {
   .hero-content-wrapper {
     padding: 0 20px;
   }
-  
+
   .hero-content {
     gap: 35px;
   }
-  
+
   .hero-title {
     font-size: 2.5rem;
     line-height: 1.1;
@@ -453,7 +454,7 @@ const scrollToTimeline = () => {
   .hero-subtitle {
     font-size: 1.25rem;
   }
-  
+
   .hero-description {
     font-size: 1.1rem;
   }
@@ -462,7 +463,7 @@ const scrollToTimeline = () => {
     justify-content: center;
     gap: 1rem;
   }
-  
+
   .hero-actions .btn {
     min-width: 140px;
   }
@@ -490,11 +491,11 @@ const scrollToTimeline = () => {
   .hero-content-wrapper {
     padding: 0 15px;
   }
-  
+
   .hero-content {
     gap: 30px;
   }
-  
+
   .hero-title {
     font-size: 2rem;
     line-height: 1.1;
@@ -503,7 +504,7 @@ const scrollToTimeline = () => {
   .hero-subtitle {
     font-size: 1.1rem;
   }
-  
+
   .hero-description {
     font-size: 1rem;
   }
@@ -518,7 +519,7 @@ const scrollToTimeline = () => {
     flex-direction: column;
     gap: 0.75rem;
   }
-  
+
   .hero-actions .btn {
     width: 100%;
     min-width: auto;
@@ -533,7 +534,7 @@ const scrollToTimeline = () => {
     grid-template-columns: 1fr;
     gap: 0.75rem;
   }
-  
+
   .stat-card {
     padding: 1.25rem 1rem;
   }
@@ -541,7 +542,7 @@ const scrollToTimeline = () => {
   .canvas-container {
     padding: 0 1rem;
   }
-  
+
   .canvas-placeholder {
     padding: 2rem 1rem;
   }
