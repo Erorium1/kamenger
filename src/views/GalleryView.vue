@@ -116,7 +116,10 @@ const cdnSources = [
   'https://res.cloudinary.com/demc61dkq/image/upload/v1758533990/Picture4_ual3yv.png',
   'https://res.cloudinary.com/demc61dkq/image/upload/v1758533988/Picture1_rpcsca.png',
   'https://res.cloudinary.com/demc61dkq/image/upload/v1758651830/WhatsApp_Image_2025-09-23_at_23.11.52_1_pqd78g.jpg',
-  'https://res.cloudinary.com/demc61dkq/image/upload/v1758651988/WhatsApp_Image_2025-09-23_at_23.11.52_2_qgxr28.jpg'
+  'https://res.cloudinary.com/demc61dkq/image/upload/v1758651988/WhatsApp_Image_2025-09-23_at_23.11.52_2_qgxr28.jpg',
+  'https://res.cloudinary.com/demc61dkq/image/upload/v1758704604/WhatsApp_Image_2025-09-24_at_11.02.05_yqdjir.jpg',
+  'https://res.cloudinary.com/demc61dkq/image/upload/v1758704604/WhatsApp_Image_2025-09-24_at_11.02.07_km0ks3.jpg',
+  'https://res.cloudinary.com/demc61dkq/image/upload/v1758704603/WhatsApp_Image_2025-09-24_at_11.02.06_ktcwj2.jpg',
 ]
 
 const mediaItems = ref([])
