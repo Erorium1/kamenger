@@ -95,7 +95,7 @@
 <script setup>
 import { ref, onMounted, onBeforeUnmount, inject, computed } from 'vue'
 import FbxViewer from '@/components/FbxViewer.vue'
-const fbxSrc = 'https://caspianstartup.kz/docs/kemer.fbx'
+const fbxSrc = 'https://caspianstartup.kz/docs/Kemer3D.glb'
 
 const translations = inject('translations')
 const currentLanguage = inject('currentLanguage')

@@ -11,6 +11,7 @@ import { onMounted, onBeforeUnmount, ref } from 'vue'
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader.js'
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 
 const props = defineProps({
     src: { type: String, required: true },
@@ -65,39 +66,74 @@ onMounted(() => {
     controls.autoRotate = props.autoRotate
     controls.autoRotateSpeed = 1.2
 
-    const loader = new FBXLoader()
-    loader.load(
-        props.src,
-        (obj) => {
-            obj.traverse((c) => {
-                if (c.isMesh) {
-                    c.castShadow = true
-                    c.receiveShadow = true
-                    if (c.material) {
-                        c.material.side = THREE.FrontSide
+    const lowerSrc = (props.src || '').toLowerCase()
+    const isGltf = lowerSrc.endsWith('.glb') || lowerSrc.endsWith('.gltf')
+    if (isGltf) {
+        const loader = new GLTFLoader()
+        loader.load(
+            props.src,
+            (gltf) => {
+                const obj = gltf.scene || gltf.scenes?.[0]
+                if (!obj) throw new Error('GLTF has no scene')
+                obj.traverse((c) => {
+                    if (c.isMesh) {
+                        c.castShadow = true
+                        c.receiveShadow = true
+                        if (c.material) c.material.side = THREE.FrontSide
                     }
-                }
-            })
-            // Center and scale to fit
-            const box = new THREE.Box3().setFromObject(obj)
-            const size = new THREE.Vector3()
-            const center = new THREE.Vector3()
-            box.getSize(size)
-            box.getCenter(center)
-            obj.position.sub(center)
-            const fitHeightDistance = size.y > 0 ? size.y : 1
-            const scale = 2.4 / fitHeightDistance
-            obj.scale.setScalar(scale)
-            scene.add(obj)
-            animate()
-            loading.value = false
-        },
-        undefined,
-        (err) => {
-            console.error('FBX load error', err)
-            loading.value = false
-        }
-    )
+                })
+                const box = new THREE.Box3().setFromObject(obj)
+                const size = new THREE.Vector3(); const center = new THREE.Vector3()
+                box.getSize(size); box.getCenter(center)
+                obj.position.sub(center)
+                const fit = size.y > 0 ? size.y : (size.length() || 1)
+                const scale = 2.4 / fit
+                obj.scale.setScalar(scale)
+                scene.add(obj)
+                animate()
+                loading.value = false
+            },
+            undefined,
+            (err) => {
+                console.error('GLTF load error', err)
+                loading.value = false
+            }
+        )
+    } else {
+        const loader = new FBXLoader()
+        loader.load(
+            props.src,
+            (obj) => {
+                obj.traverse((c) => {
+                    if (c.isMesh) {
+                        c.castShadow = true
+                        c.receiveShadow = true
+                        if (c.material) {
+                            c.material.side = THREE.FrontSide
+                        }
+                    }
+                })
+                // Center and scale to fit
+                const box = new THREE.Box3().setFromObject(obj)
+                const size = new THREE.Vector3()
+                const center = new THREE.Vector3()
+                box.getSize(size)
+                box.getCenter(center)
+                obj.position.sub(center)
+                const fitHeightDistance = size.y > 0 ? size.y : 1
+                const scale = 2.4 / fitHeightDistance
+                obj.scale.setScalar(scale)
+                scene.add(obj)
+                animate()
+                loading.value = false
+            },
+            undefined,
+            (err) => {
+                console.error('FBX load error', err)
+                loading.value = false
+            }
+        )
+    }
 
     window.addEventListener('resize', resize)
     resize()
