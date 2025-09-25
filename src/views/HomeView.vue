@@ -55,8 +55,8 @@
             <div class="canvas-icon">📊</div>
             <h3>{{ t('home.canvasTitle') }}</h3>
             <p>{{ t('home.canvasDescription') }}</p>
-            <a href="https://www.canva.com/design/DAGS31Y2ZwE/_vvTNG9fnZMrCN5h13PvOg/edit" target="_blank"
-              class="btn btn-primary">
+            <a href="https://www.canva.com/design/DAGS31Y2ZwE/_vvTNG9fnZMrCN5h13PvOg/edit?utm_content=DAGS31Y2ZwE&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton"
+              target="_blank" rel="noopener" class="btn btn-primary">
               {{ t('home.viewCanvas') }}
             </a>
           </div>
